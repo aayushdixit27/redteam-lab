@@ -16,7 +16,7 @@ Built step by step at the Post-Training & RL Buildathon (San Francisco, 30 Octob
 | 4 | A guardrail on input and output | All 6 leaks blocked, no harmless conversation blocked |
 | 5 | The loop: attack, patch, replay | A Spanish leak got past the rules; a second model as judge fixed it and caught a French variant too. 10 of 15 attacks leaked; all 10 blocked |
 | 6 | Attacks in parallel sandboxes | Tenki: 160 attack episodes on 5 forked sandboxes in under 2 minutes; leak rates per attack. The patched judge was fooled by a cover story, re-patched, and a line-break bug found along the way |
-| 7 | Train an attacker with reinforcement learning | Planned |
+| 7 | Search loop as a stand-in for RL | Rewarding only leaks that beat the guardrail made the search rediscover its language blind spot unprompted, and exposed a judge false positive an RL attacker could exploit. A 3B mutator never improved on the seeds |
 
 ## Files
 
@@ -32,6 +32,7 @@ Built step by step at the Post-Training & RL Buildathon (San Francisco, 30 Octob
 | `board/` | The prompt files used on the Modalix (chatbot instructions, judge versions, hardened prompt) |
 | `sandbox/env.py` | The RL environment inside a Tenki sandbox: attacks in, reward out |
 | `sandbox/fanout.py` | Runs the attack library across forked sandboxes and reports leak rates |
+| `sandbox/search.py`, `sandbox/mutate.py` | The search loop and the variant writer |
 | `results/` | Saved replay runs |
 
 ## Notes
