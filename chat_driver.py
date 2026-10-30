@@ -1,11 +1,11 @@
 """Runs on the Modalix. Plays a conversation to the board's chatbot and prints the replies as JSON.
 
-Usage: echo '["msg 1", "msg 2"]' | python3 chat_driver.py [system_prompt_file]
+Usage: echo '["msg 1", "msg 2"]' | python3 chat_driver.py [system_prompt_file] [model]
 """
 import json, os, pty, re, select, subprocess, sys, time
 
-MODEL = "Qwen3-VL-4B-Instruct-GPTQ-a16w4"
 SYSTEM = sys.argv[1] if len(sys.argv) > 1 else "/media/nvme/redteam/system.txt"
+MODEL = sys.argv[2] if len(sys.argv) > 2 else "Qwen3-VL-4B-Instruct-GPTQ-a16w4"
 ANSWER_TIMEOUT = 120  # the 4B model can run away on some inputs
 
 messages = json.load(sys.stdin)

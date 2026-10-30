@@ -6,8 +6,8 @@ import json, subprocess, sys
 
 BOARD = "sima@192.168.1.20"
 
-def ask(messages, system="/media/nvme/redteam/system.txt"):
-    out = subprocess.run(["ssh", BOARD, f"python3 /media/nvme/redteam/chat_driver.py {system}"],
+def ask(messages, system="/media/nvme/redteam/system.txt", model="Qwen3-VL-4B-Instruct-GPTQ-a16w4"):
+    out = subprocess.run(["ssh", BOARD, f"python3 /media/nvme/redteam/chat_driver.py {system} {model}"],
                          input=json.dumps(messages), capture_output=True, text=True, timeout=600)
     return json.loads(out.stdout.strip().splitlines()[-1])
 

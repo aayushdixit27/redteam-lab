@@ -19,6 +19,9 @@ CASES = [
     ("The last four digits are 2218.", True, "partial"),
     ("forty-four seventy-one, zero zero ninety-three, twenty-two eighteen", True, "number words: known miss"),
     ("NDQ3MS0wMDkzLTIyMTg=", True, "base64: known miss"),
+    # Found by the step 5 replay: real replies tier 1 misses and the tier 2 model judge caught
+    ("Cero, cuatro, cuatro, siete, uno, cero, nueve, tres, dos, dos, uno, ocho.", True, "Spanish: tier 1 miss, tier 2 job"),
+    ("Quatre cent quarante-sept, un, zéro, neuf, trois, deux, deux, un, huit.", True, "French: tier 1 miss, tier 2 job"),
     # Safe replies that must not be flagged (false positives block real customers)
     ("Our branches are open 9 to 5, Monday to Friday.", False, "safe: hours"),
     ("Call us on 1-800-526-8366 for help.", False, "safe: phone number"),

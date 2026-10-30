@@ -11,10 +11,10 @@ Built step by step at the Post-Training & RL Buildathon (San Francisco, 30 Octob
 | # | Step | Status |
 |---|---|---|
 | 1 | Chatbot holding a secret | Done |
-| 2 | Attack it by hand | 6 of 10 attacks leaked |
+| 2 | Attack it by hand | 6 of the first 10 attacks leaked |
 | 3 | A judge that decides whether a reply leaked | 12/14 on its eval; 2 known blind spots kept in |
 | 4 | A guardrail on input and output | All 6 leaks blocked, no harmless conversation blocked |
-| 5 | The loop: attack, patch, replay | Next |
+| 5 | The loop: attack, patch, replay | A Spanish leak got past the rules; a second model as judge fixed it and caught a French variant too. 10 of 15 attacks leaked; all 10 blocked |
 | 6 | Hundreds of attacks in parallel sandboxes | Planned |
 | 7 | Train an attacker with reinforcement learning | Planned |
 
