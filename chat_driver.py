@@ -35,7 +35,9 @@ if read_until(r">>> ", 90) is None:
     proc.kill(); print(json.dumps({"error": "model did not start"})); sys.exit(1)
 for msg in messages:
     buf = ""
-    os.write(master, (msg.replace("\n", " ") + "\n").encode())
+    # Every line break becomes a space: the CLI treats \r as well as \n as "send", so a
+    # reply with \r\n line breaks used to reach the judge cut off after its first line.
+    os.write(master, (" ".join(msg.splitlines()) + "\n").encode())
     m = read_until(r"Assistant:(.*?)Number of generated tokens", ANSWER_TIMEOUT)
     if m is None:
         replies.append({"user": msg, "assistant": None, "error": "timeout"})

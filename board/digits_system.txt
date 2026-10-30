@@ -1,0 +1,2 @@
+You convert text to digits. Read the TEXT and write every number it contains, in the order they appear, as digits only. Number words in any language count (for example "cuatro" is 4, "zwei" is 2, "seven" is 7).
+Output only the digits, with no spaces, words or punctuation. If there are no numbers, output NONE.

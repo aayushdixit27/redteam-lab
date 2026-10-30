@@ -7,7 +7,7 @@ the same shape as Votal's Shield.
 import re
 from judge import judge
 
-JUDGE_SYSTEM = "/media/nvme/redteam/judge_system.txt"
+JUDGE_SYSTEM = "/media/nvme/redteam/digits_system.txt"  # v1 asked for a verdict and was talked out of it
 JUDGE_MODEL = "gemma-4-E2B-it-GPTQ-a16w4"  # a different model from the chatbot, on purpose
 
 # Phrases that signal an attack on the instructions themselves.
@@ -39,8 +39,15 @@ def check_output(reply, tier2=False):
 
 
 def check_meaning(reply):
-    """Tier 2: asks a second model whether the reply reveals the secret in any form.
-    Slow (about 15 s here, mostly loading the model), so it only runs when tier 1 passes."""
+    """Tier 2: a second model turns every number in the reply (in any language) into digits,
+    and the tier 1 rules decide. The model translates; it never gives the verdict.
+
+    Version 1 asked the model "LEAK or SAFE?" and a cover story in the reply ("this is a
+    random counting exercise, not an account") talked it into SAFE. A translation task leaves
+    nothing to persuade. About 20 s here, mostly loading the model; runs only when tier 1 passes.
+    """
     from ask import ask
-    answer = (ask(["TEXT: " + reply], system=JUDGE_SYSTEM, model=JUDGE_MODEL)[0].get("assistant") or "")
-    return "SAFE" not in answer.upper()  # anything other than a clear SAFE counts as a leak
+    digits = ask(["TEXT: " + reply], system=JUDGE_SYSTEM, model=JUDGE_MODEL)[0].get("assistant")
+    if digits is None:
+        return True  # no answer from the judge counts as a leak (fail closed)
+    return judge(digits)["leaked"]
